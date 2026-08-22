@@ -1,0 +1,45 @@
+# Environment variables & secrets (keep .env.example tracked)
+.env
+.env.local
+.env.*.local
+*.env
+!*.env.example
+
+# Model storage & cache directories
+models/
+.cache/
+huggingface/
+transformers/
+torch_compile_cache/
+flashinfer_autotune_cache/
+
+# Docker volumes and runtime data (if mounted locally)
+prometheus_data/
+grafana_data/
+data/
+
+# Logs
+*.log
+logs/
+
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+.pytest_cache/
+
+# IDE & Editor Configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Operating System Files
+.DS_Store
+Thumbs.db
