@@ -1,0 +1,11 @@
+Server,Concurrency,Wall Time (s),Throughput (tok/s),Avg Latency (s)
+vLLM,1,0.51,92.8,0.51
+vLLM,5,1.62,304.4,1.07
+vLLM,10,1.67,621.9,1.16
+vLLM,20,1.72,1195.3,1.18
+vLLM,40,1.89,2138.6,1.29
+llama.cpp,1,0.18,150.7,0.18
+llama.cpp,5,2.27,213.6,1.6
+llama.cpp,10,3.22,270.4,1.9
+llama.cpp,20,3.32,619.2,2.19
+llama.cpp,40,5.16,731.8,2.02
