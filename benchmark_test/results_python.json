@@ -1,0 +1,57 @@
+{
+  "backend": "Python (FastAPI)",
+  "timestamp": "2026-08-25 14:16:00",
+  "image_size_mb": 62.78,
+  "idle_mem_mb": 89.56,
+  "peak_mem_mb": 558.3,
+  "cold_start_sec": 5.239,
+  "api_benchmarks": {
+    "c50": {
+      "concurrency": 50,
+      "total_requests": 1000,
+      "success_requests": 1000,
+      "errors": 0,
+      "total_time_sec": 13.07,
+      "rps": 76.51,
+      "latency_p50_ms": 625.57,
+      "latency_p90_ms": 780.53,
+      "latency_p99_ms": 997.42,
+      "latency_avg_ms": 649.18,
+      "latency_min_ms": 132.07,
+      "latency_max_ms": 1071.38
+    },
+    "c100": {
+      "concurrency": 100,
+      "total_requests": 2000,
+      "success_requests": 2000,
+      "errors": 0,
+      "total_time_sec": 25.141,
+      "rps": 79.55,
+      "latency_p50_ms": 1185.45,
+      "latency_p90_ms": 1496.75,
+      "latency_p99_ms": 2406.46,
+      "latency_avg_ms": 1244.22,
+      "latency_min_ms": 447.45,
+      "latency_max_ms": 3205.5
+    },
+    "c200": {
+      "concurrency": 200,
+      "total_requests": 4000,
+      "success_requests": 3992,
+      "errors": 8,
+      "total_time_sec": 51.622,
+      "rps": 77.33,
+      "latency_p50_ms": 2604.84,
+      "latency_p90_ms": 2843.75,
+      "latency_p99_ms": 6698.33,
+      "latency_avg_ms": 2545.12,
+      "latency_min_ms": 770.46,
+      "latency_max_ms": 10024.87
+    }
+  },
+  "websocket_benchmark": {
+    "attempted_connections": 100,
+    "successful_connections": 100,
+    "failed_connections": 0
+  }
+}

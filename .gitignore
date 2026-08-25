@@ -40,6 +40,14 @@ ENV/
 *.swo
 *~
 
+# Node.js & Web Frontend
+node_modules/
+dist/
+dist-ssr/
+*.local
+.pnpm-debug.log*
+
 # Operating System Files
 .DS_Store
 Thumbs.db
+
