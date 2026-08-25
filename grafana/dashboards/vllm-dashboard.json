@@ -168,7 +168,7 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "Prometheus" },
-          "expr": "vllm:gpu_cache_usage_factor{service=\"vllm-server\"}",
+          "expr": "(vllm:kv_cache_usage_perc{service=\"vllm-server\"} or vllm:gpu_cache_usage_factor{service=\"vllm-server\"})",
           "refId": "A"
         }
       ]

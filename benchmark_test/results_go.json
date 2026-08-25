@@ -1,0 +1,57 @@
+{
+  "backend": "Go (Golang)",
+  "timestamp": "2026-08-25 14:32:56",
+  "image_size_mb": 8.22,
+  "idle_mem_mb": 13.09,
+  "peak_mem_mb": 31.87,
+  "cold_start_sec": 0.255,
+  "api_benchmarks": {
+    "c50": {
+      "concurrency": 50,
+      "total_requests": 1000,
+      "success_requests": 1000,
+      "errors": 0,
+      "total_time_sec": 2.525,
+      "rps": 395.99,
+      "latency_p50_ms": 82.48,
+      "latency_p90_ms": 260.23,
+      "latency_p99_ms": 511.04,
+      "latency_avg_ms": 120.65,
+      "latency_min_ms": 9.91,
+      "latency_max_ms": 813.46
+    },
+    "c100": {
+      "concurrency": 100,
+      "total_requests": 2000,
+      "success_requests": 2000,
+      "errors": 0,
+      "total_time_sec": 6.28,
+      "rps": 318.47,
+      "latency_p50_ms": 105.91,
+      "latency_p90_ms": 869.16,
+      "latency_p99_ms": 2274.81,
+      "latency_avg_ms": 306.82,
+      "latency_min_ms": 7.8,
+      "latency_max_ms": 3990.72
+    },
+    "c200": {
+      "concurrency": 200,
+      "total_requests": 4000,
+      "success_requests": 4000,
+      "errors": 0,
+      "total_time_sec": 9.206,
+      "rps": 434.48,
+      "latency_p50_ms": 165.24,
+      "latency_p90_ms": 731.77,
+      "latency_p99_ms": 5393.36,
+      "latency_avg_ms": 447.06,
+      "latency_min_ms": 8.97,
+      "latency_max_ms": 6342.89
+    }
+  },
+  "websocket_benchmark": {
+    "attempted_connections": 100,
+    "successful_connections": 100,
+    "failed_connections": 0
+  }
+}

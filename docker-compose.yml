@@ -1,4 +1,44 @@
 services:
+  # ── vLLM Control Dashboard ────────────────────────────────────
+
+  # 5. Dashboard Backend (Go — High Performance Control Plane)
+  vllm-dashboard-backend:
+    build:
+      context: ./dashboard/backend
+      dockerfile: Dockerfile
+    container_name: vllm-dashboard-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Docker control
+      - ~/.cache/huggingface:/root/.cache/huggingface
+      - dashboard_data:/data
+    environment:
+      VLLM_CONTAINER_NAME: vllm-server
+      VLLM_IMAGE: vllm/vllm-openai:latest
+      VLLM_API_BASE: http://vllm-server:8000
+      HF_TOKEN: ${HF_TOKEN:-}
+      VLLM_API_KEY: ${VLLM_API_KEY:-}
+      DOCKER_NETWORK: vllm_vllm_net
+    networks:
+      - vllm_net
+
+  # 6. Dashboard Frontend (Nginx — Web UI on port 3001)
+  vllm-dashboard-frontend:
+    build:
+      context: ./dashboard/frontend
+      dockerfile: Dockerfile
+    container_name: vllm-dashboard-frontend
+    restart: unless-stopped
+    ports:
+      - "3001:80"
+    depends_on:
+      - vllm-dashboard-backend
+    networks:
+      - vllm_net
+
+
   # 1. vLLM Inference Engine
   vllm:
     image: vllm/vllm-openai:latest
@@ -20,6 +60,8 @@ services:
       - --max-model-len
       - "4096"
       - --trust-remote-code
+    networks:
+      - vllm_net
     deploy:
       resources:
         reservations:
@@ -36,6 +78,8 @@ services:
     restart: unless-stopped
     ports:
       - "9400:9400"
+    networks:
+      - vllm_net
     deploy:
       resources:
         reservations:
@@ -58,6 +102,8 @@ services:
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --storage.tsdb.path=/prometheus
+    networks:
+      - vllm_net
 
   # 4. Grafana (Visual Dashboard)
   grafana:
@@ -74,9 +120,16 @@ services:
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
       - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
       - grafana_data:/var/lib/grafana
+    networks:
+      - vllm_net
     depends_on:
       - prometheus
 
 volumes:
   prometheus_data:
   grafana_data:
+  dashboard_data:
+
+networks:
+  vllm_net:
+    driver: bridge
