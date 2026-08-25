@@ -113,11 +113,11 @@ graph TD
 
 | Concurrency Level ($N$) | vLLM Throughput | llama.cpp Throughput | vLLM $\bar{L}$ | llama.cpp $\bar{L}$ | Throughput Ratio (vLLM / llama.cpp) |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| **$N = 1$** | 92.8 tok/s | **150.7 tok/s** | 0.51 s | **0.18 s** | 0.61x (`llama.cpp` wins) |
-| **$N = 5$** | **304.4 tok/s** | 213.6 tok/s | **1.07 s** | 1.60 s | **1.42x** (`vLLM` wins) |
-| **$N = 10$** | **621.9 tok/s** | 270.4 tok/s | **1.16 s** | 1.90 s | **2.30x** (`vLLM` wins) |
-| **$N = 20$** | **1,195.3 tok/s** | 619.2 tok/s | **1.18 s** | 2.19 s | **1.93x** (`vLLM` wins) |
-| **$N = 40$** | **2,138.6 tok/s** | 731.8 tok/s | **1.29 s** | 2.02 s | **2.92x** (`vLLM` wins) |
+| **$N = 1$** | 92.8 tok/s | **150.7 tok/s** | 0.51 s | **0.18 s** | 0.61x (`llama.cpp` superior) |
+| **$N = 5$** | **304.4 tok/s** | 213.6 tok/s | **1.07 s** | 1.60 s | **1.42x** (`vLLM` superior) |
+| **$N = 10$** | **621.9 tok/s** | 270.4 tok/s | **1.16 s** | 1.90 s | **2.30x** (`vLLM` superior) |
+| **$N = 20$** | **1,195.3 tok/s** | 619.2 tok/s | **1.18 s** | 2.19 s | **1.93x** (`vLLM` superior) |
+| **$N = 40$** | **2,138.6 tok/s** | 731.8 tok/s | **1.29 s** | 2.02 s | **2.92x** (`vLLM` superior) |
 
 ---
 
@@ -152,17 +152,13 @@ llama.cpp Architecture (Slot-Based Static Parallelism)
 
 ## 🎯 5. System Architecture Guidelines
 
-```text
-┌─────────────────────────────────────────────────┬─────────────────────────────────────────────────┐
-│               🏢 RECOMMEND vLLM                 │            💻 RECOMMEND llama.cpp               │
-├─────────────────────────────────────────────────┼─────────────────────────────────────────────────┤
-│ • Production Enterprise API Gateways            │ • Local Workstations / Personal AI Assistants   │
-│ • Serving workloads with concurrency > 5 users  │ • Edge Devices / Embedded Systems (Jetson/ARM)  │
-│ • Maximizing token throughput per GPU dollar    │ • Environments with severely constrained VRAM   │
-│ • Strict SLA requiring deterministic latency    │ • Single-user workflows requiring minimum initial│
-│   under high concurrent traffic                 │   response time (0.18s latency)                 │
-└─────────────────────────────────────────────────┴─────────────────────────────────────────────────┘
-```
+| Architectural Dimension | 🏢 vLLM (Continuous Batching & PagedAttention) | 💻 llama.cpp (Native C++ & Static Slots) |
+| :--- | :--- | :--- |
+| **Recommended Deployment Target** | • Production Enterprise API Gateways<br>• Scalable Multi-tenant Cloud Serving Platforms | • Local Workstations & Developer Environments<br>• Edge Devices & Embedded Systems (Jetson / ARM / Apple Silicon) |
+| **Optimal Concurrency Profile** | • Concurrent workloads ($N \ge 5$ up to high concurrency)<br>• Bursty multi-user traffic with overlapping requests | • Single-stream workloads ($N = 1$)<br>• Strictly sequential standalone tasks |
+| **Primary Optimization Goal** | • Maximizing aggregate token throughput per GPU dollar<br>• Flat per-user latency profile under heavy concurrent load | • Minimizing initial response time (0.18s single-stream latency)<br>• Minimizing memory footprint via low-bit quantization |
+| **Hardware & Resource Profile** | • Dedicated GPUs with sufficient VRAM for Paged Pool allocation | • Constrained VRAM environments, consumer hardware, or CPU-only inference |
+| **Service Level Agreement (SLA)** | • High SLA confidence with deterministic latency bounds | • Best-effort queuing under multi-user concurrency |
 
 ---
 
